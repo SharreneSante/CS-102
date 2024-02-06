@@ -1,0 +1,57 @@
+---
+title: "MovieReview"
+author: "Sharrene Sante"
+date: "2024-02-06"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(dplyr)
+library(rvest)
+library(stringr)
+library(purrr)
+```
+
+
+```{r}
+# Define the URL of the reviews page
+url <- "https://www.imdb.com/title/tt0111161/?ref_=ttrt_ov"
+
+# Read the HTML of the page
+webpage <- read_html(url)
+
+# Define a function to extract review information from a single review element
+extract_review_info <- function(review_node) {
+  username <- review_node %>% html_node(".display-name-link") %>% html_text()
+  date <- review_node %>% html_node(".review-date") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  review <- review_node %>% html_node(".text") %>% html_text()
+ 
+  return(data.frame(
+    title = c("The Shawshank Redemption"),
+    username = username,
+    date = date,
+    stars = as.numeric(stars),
+    content = review
+  ))
+}
+
+# Scrape the first page of reviews
+reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info)
+
+# Scrape additional pages of reviews
+for (page_num in 2:9) {
+  url <- paste0("https://www.imdb.com/title/tt0111161/?ref_=ttrt_ov", page_num)
+  webpage <- read_html(url)
+  reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
+}
+
+# Print the first 300 reviews
+View(head(reviews, 300))
+
+
+```
