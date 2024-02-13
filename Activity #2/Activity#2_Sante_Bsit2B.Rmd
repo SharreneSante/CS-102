@@ -21,7 +21,7 @@ library(purrr)
 # Define the URL of the reviews page
 url <- "https://www.imdb.com/title/tt0111161/?ref_=ttrt_ov"
 
-# Read the HTML of the page
+
 webpage <- read_html(url)
 
 # Define a function to extract review information from a single review element
@@ -45,7 +45,6 @@ reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review
 
 # Scrape additional pages of reviews
 for (page_num in 2:9) {
-  url <- paste0("https://www.imdb.com/title/tt0111161/?ref_=ttrt_ov", page_num)
   webpage <- read_html(url)
   reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
 }
