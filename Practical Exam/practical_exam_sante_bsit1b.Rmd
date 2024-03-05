@@ -1,0 +1,44 @@
+---
+title: "Practical Exam CS 102"
+author: "Sharrene Sante"
+date: "2024-03-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+warpbreaks
+```
+
+
+```{r}
+sapply(warpbreaks,class)
+```
+
+
+```{r}
+warpbreaks$breaks <- as.integer(warpbreaks.breaks)
+warpbreaks$integer <- as.numeric(warpbreaks.wool)
+warpbreaks$tension <- as.integer(warpbreaks.tension)
+warpbreaks
+
+```
+
+
+```{r}
+warpbreaks <- data.frame(warpbreaks)
+```
+
+warpbreaks = transform(warpbreaks
+,breaks = as.integer(breaks)
+,death = as.integer(wool)
+,)
+
+
+
+```{r}
+(txt <- readLines("files/exampleFile.txt"))
+```
