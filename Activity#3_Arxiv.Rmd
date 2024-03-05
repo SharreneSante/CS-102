@@ -1,0 +1,99 @@
+---
+title: "ArXiv"
+author: "Sharrene Sante"
+date: "2024-02-20"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(dplyr)
+library(rvest)
+```
+
+
+```{r}
+#creating connections
+library(DBI)
+library(RMariaDB)
+
+connection <- dbConnect(RMariaDB::MariaDB(),
+              dsn = "MySQL-connection",
+              Server = "localhost",
+              dbname = "cs_102_sante",
+              user = "root",
+              password ="")
+
+```
+
+
+```{r}
+dbListTables(connection)
+
+```
+
+
+
+```{r}
+dbListFields(connection,"author")
+
+```
+
+```{r}
+dbListFields(connection,"posts")
+
+```
+
+```{r}
+tmp_list <- read_html(tmp_url) %>%
+  html_nodes('p.list-title.is-inline-block') %>%
+  html_nodes('a[href^="https://arxiv.org/abs"]')%>%
+  html_attr('href')
+
+
+#title
+tmp_title <- tmp_paragraph %>% html_nodes("h1.title.mathjax") %>% html_text(T)
+tmp_title <- gsub('Title:', '', tmp_title)
+title <- c(title, tmp_title)
+
+#meta
+tmp
+
+```
+
+
+
+
+
+
+
+
+
+```{r}
+query <-"INSERT INTO authors (id, first_name, last_name, email, birthdate, added) VALUES (2022-2903-A, 'Sharrene', 'Sante', 'sharrenesante@gmail.com', 2003-08-13', 10:00')"
+                                                        
+
+
+```
+
+
+
+
+
+
+```{r}
+empi_data <- dbGetQuery(connection, "SELECT * FROM cs_102_sante.authors")
+empi_data[c(1:3),]
+```
+
+
+
+
+
+
+
+
