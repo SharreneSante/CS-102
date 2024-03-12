@@ -9,14 +9,16 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r num1}
+```{r}
 library(polite)
 library(dplyr)
 library(rvest)
 library(stringr)
 library(purrr)
+library(readr)
+```
 
-
+```{r num1}
 url <- "https://www.imdb.com/title/tt15009428/?ref_=chtmvm_i_1"
 
 webpage <- read_html(url)
@@ -25,7 +27,7 @@ webpage <- read_html(url)
 extract_review_info <- function(review_node) {
   username <- review_node %>% html_node(".display-name-link") %>% html_text()
   date <- review_node %>% html_node(".review-date") %>% html_text()
-  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  stars <- review_node %>% html_node(".rating-button__aggregate-rating__score") %>% html_text()
   review <- review_node %>% html_node(".text") %>% html_text()
  
   return(data.frame(
@@ -47,8 +49,11 @@ for (page_num in 2:15) {
   reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
 }
 
+write.csv(reviews, file = "Argylle.csv", row.names = FALSE)
 
-View(head(reviews, 300))
+print(data.frame)
+
+
 
 
 
@@ -88,8 +93,9 @@ for (page_num in 2:15) {
   reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
 }
 
+write.csv(reviews, file = "Poor Things.csv", row.names = FALSE)
 
-View(head(reviews, 300))
+print(data.frame)
 
 ```
 
@@ -131,8 +137,9 @@ for (page_num in 2:15) {
   reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
 }
 
+write.csv(reviews, file = "The Beekeeper.csv", row.names = FALSE)
 
-View(head(reviews, 300))
+print(data.frame)
 
 ```
 
@@ -171,7 +178,9 @@ for (page_num in 2:15) {
 }
 
 
-View(head(reviews, 300))
+write.csv(reviews, file = "Saltburn.csv", row.names = FALSE)
+
+print(data.frame)
 
 ```
 
@@ -210,7 +219,9 @@ for (page_num in 2:15) {
 }
 
 
-View(head(reviews, 300))
+write.csv(reviews, file = "Anyone But You.csv", row.names = FALSE)
+
+print(data.frame)
 
 ```
 
@@ -251,7 +262,9 @@ for (page_num in 2:15) {
 }
 
 
-View(head(reviews, 300))
+write.csv(reviews, file = "X.csv", row.names = FALSE)
+
+print(data.frame)
 
 ```
 
@@ -290,10 +303,11 @@ for (page_num in 2:15) {
 }
 
 
-View(head(reviews, 300))
+write.csv(reviews, file = "The Holdovers.csv", row.names = FALSE)
+
+print(data.frame)
 
 ```
-
 
 
 
@@ -330,11 +344,11 @@ for (page_num in 2:15) {
 }
 
 
-View(head(reviews, 300))
+write.csv(reviews, file = "Oppenheimer.csv", row.names = FALSE)
+
+print(data.frame)
 
 ```
-
-
 
 
 
@@ -372,10 +386,51 @@ for (page_num in 2:15) {
 }
 
 
-View(head(reviews, 300))
+write.csv(reviews, file = "The Marvels.csv", row.names = FALSE)
+
+print(data.frame)
 
 ```
 
+
+
+```{r num10}
+
+url <- "https://www.imdb.com/title/tt6166392/?ref_=chtmvm_t_28"
+webpage <- read_html(url)
+
+
+extract_review_info <- function(review_node) {
+  username <- review_node %>% html_node(".display-name-link") %>% html_text()
+  date <- review_node %>% html_node(".review-date") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  review <- review_node %>% html_node(".text") %>% html_text()
+ 
+  return(data.frame(
+    title = c("Wonka"),
+    username = username,
+    date = date,
+    stars = as.numeric(stars),
+    content = review
+  ))
+}
+
+
+reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info)
+
+
+for (page_num in 2:15) {
+  url <- paste0("https://www.imdb.com/title/tt6166392/?ref_=chtmvm_t_28", page_num)
+  webpage <- read_html(url)
+  reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
+}
+
+
+write.csv(reviews, file = "Wonka.csv", row.names = FALSE)
+
+print(data.frame)
+
+```
 
 
 
