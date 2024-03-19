@@ -10,12 +10,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
+
 library(polite)
 library(dplyr)
 library(rvest)
 library(stringr)
 library(purrr)
-library(readr)
+
+
 ```
 
 ```{r num1}
@@ -27,14 +29,15 @@ webpage <- read_html(url)
 extract_review_info <- function(review_node) {
   username <- review_node %>% html_node(".display-name-link") %>% html_text()
   date <- review_node %>% html_node(".review-date") %>% html_text()
-  stars <- review_node %>% html_node(".rating-button__aggregate-rating__score") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  new_stars <- gsub("[^0-9]","",stars)
   review <- review_node %>% html_node(".text") %>% html_text()
  
   return(data.frame(
     title = c("Argylle"),
     username = username,
     date = date,
-    stars = as.numeric(stars),
+    stars = as.numeric(new_stars),
     content = review
   ))
 }
@@ -56,7 +59,6 @@ print(data.frame)
 
 
 
-
 ```
 
 
@@ -72,13 +74,14 @@ extract_review_info <- function(review_node) {
   username <- review_node %>% html_node(".display-name-link") %>% html_text()
   date <- review_node %>% html_node(".review-date") %>% html_text()
   stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+   new_stars <- gsub("[^0-9]","",stars)
   review <- review_node %>% html_node(".text") %>% html_text()
  
   return(data.frame(
     title = c("Poor Things"),
     username = username,
     date = date,
-    stars = as.numeric(stars),
+    stars = as.numeric(new_stars),
     content = review
   ))
 }
@@ -116,13 +119,14 @@ extract_review_info <- function(review_node) {
   username <- review_node %>% html_node(".display-name-link") %>% html_text()
   date <- review_node %>% html_node(".review-date") %>% html_text()
   stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+   new_stars <- gsub("[^0-9]","",stars)
   review <- review_node %>% html_node(".text") %>% html_text()
  
   return(data.frame(
     title = c("The Beekeeper"),
     username = username,
     date = date,
-    stars = as.numeric(stars),
+    stars = as.numeric(new_stars),
     content = review
   ))
 }
@@ -156,13 +160,14 @@ extract_review_info <- function(review_node) {
   username <- review_node %>% html_node(".display-name-link") %>% html_text()
   date <- review_node %>% html_node(".review-date") %>% html_text()
   stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+   new_stars <- gsub("[^0-9]","",stars)
   review <- review_node %>% html_node(".text") %>% html_text()
  
   return(data.frame(
     title = c("Saltburn"),
     username = username,
     date = date,
-    stars = as.numeric(stars),
+    stars = as.numeric(new_stars),
     content = review
   ))
 }
@@ -197,13 +202,14 @@ extract_review_info <- function(review_node) {
   username <- review_node %>% html_node(".display-name-link") %>% html_text()
   date <- review_node %>% html_node(".review-date") %>% html_text()
   stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+   new_stars <- gsub("[^0-9]","",stars)
   review <- review_node %>% html_node(".text") %>% html_text()
  
   return(data.frame(
     title = c("Anyone But You"),
     username = username,
     date = date,
-    stars = as.numeric(stars),
+    stars = as.numeric(new_stars),
     content = review
   ))
 }
@@ -240,13 +246,14 @@ extract_review_info <- function(review_node) {
   username <- review_node %>% html_node(".display-name-link") %>% html_text()
   date <- review_node %>% html_node(".review-date") %>% html_text()
   stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+   new_stars <- gsub("[^0-9]","",stars)
   review <- review_node %>% html_node(".text") %>% html_text()
  
   return(data.frame(
     title = c("X"),
     username = username,
     date = date,
-    stars = as.numeric(stars),
+    stars = as.numeric(new_stars),
     content = review
   ))
 }
@@ -281,13 +288,14 @@ extract_review_info <- function(review_node) {
   username <- review_node %>% html_node(".display-name-link") %>% html_text()
   date <- review_node %>% html_node(".review-date") %>% html_text()
   stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+   new_stars <- gsub("[^0-9]","",stars)
   review <- review_node %>% html_node(".text") %>% html_text()
  
   return(data.frame(
     title = c("The Holdovers"),
     username = username,
     date = date,
-    stars = as.numeric(stars),
+    stars = as.numeric(new_stars),
     content = review
   ))
 }
@@ -322,13 +330,14 @@ extract_review_info <- function(review_node) {
   username <- review_node %>% html_node(".display-name-link") %>% html_text()
   date <- review_node %>% html_node(".review-date") %>% html_text()
   stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+   new_stars <- gsub("[^0-9]","",stars)
   review <- review_node %>% html_node(".text") %>% html_text()
  
   return(data.frame(
     title = c("Oppenheimer"),
     username = username,
     date = date,
-    stars = as.numeric(stars),
+    stars = as.numeric(new_stars),
     content = review
   ))
 }
@@ -364,13 +373,14 @@ extract_review_info <- function(review_node) {
   username <- review_node %>% html_node(".display-name-link") %>% html_text()
   date <- review_node %>% html_node(".review-date") %>% html_text()
   stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+   new_stars <- gsub("[^0-9]","",stars)
   review <- review_node %>% html_node(".text") %>% html_text()
  
   return(data.frame(
     title = c("The Marvels"),
     username = username,
     date = date,
-    stars = as.numeric(stars),
+    stars = as.numeric(new_stars),
     content = review
   ))
 }
@@ -404,13 +414,14 @@ extract_review_info <- function(review_node) {
   username <- review_node %>% html_node(".display-name-link") %>% html_text()
   date <- review_node %>% html_node(".review-date") %>% html_text()
   stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+   new_stars <- gsub("[^0-9]","",stars)
   review <- review_node %>% html_node(".text") %>% html_text()
  
   return(data.frame(
     title = c("Wonka"),
     username = username,
     date = date,
-    stars = as.numeric(stars),
+    stars = as.numeric(new_stars),
     content = review
   ))
 }
